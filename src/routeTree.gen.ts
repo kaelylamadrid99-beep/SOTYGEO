@@ -10,33 +10,518 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ActivateRouteImport } from './routes/activate'
+import { Route as AlertasRouteImport } from './routes/alertas'
+import { Route as ClientesRouteImport } from './routes/clientes'
+import { Route as CombustibleRouteImport } from './routes/combustible'
+import { Route as ConductorRouteImport } from './routes/conductor'
+import { Route as ConductoresRouteImport } from './routes/conductores'
+import { Route as DocumentosRouteImport } from './routes/documentos'
+import { Route as EnlacesRouteImport } from './routes/enlaces'
+import { Route as FinanzasRouteImport } from './routes/finanzas'
+import { Route as FlotillasRouteImport } from './routes/flotillas'
+import { Route as GeocercasRouteImport } from './routes/geocercas'
+import { Route as GpsRouteImport } from './routes/gps'
+import { Route as HistorialRouteImport } from './routes/historial'
+import { Route as IncidenciasRouteImport } from './routes/incidencias'
+import { Route as InspeccionesRouteImport } from './routes/inspecciones'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as MantenimientoRouteImport } from './routes/mantenimiento'
+import { Route as MonitorRouteImport } from './routes/monitor'
+import { Route as NotificacionesRouteImport } from './routes/notificaciones'
+import { Route as PortalRouteImport } from './routes/portal'
+import { Route as RecuperarRouteImport } from './routes/recuperar'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as ReportesRouteImport } from './routes/reportes'
+import { Route as RespaldosRouteImport } from './routes/respaldos'
+import { Route as RestablecerRouteImport } from './routes/restablecer'
+import { Route as ServiciosRouteImport } from './routes/servicios'
+import { Route as UsuariosRouteImport } from './routes/usuarios'
+import { Route as VehiculosRouteImport } from './routes/vehiculos'
+import { Route as VerificarCorreoRouteImport } from './routes/verificar-correo'
+import { Route as ApiFilesRouteImport } from './routes/api/files'
+import { Route as TrackingTokenRouteImport } from './routes/tracking/$token'
+import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as ApiCronJobsRouteImport } from './routes/api/cron/jobs'
+import { Route as ApiV1EventsRouteImport } from './routes/api/v1/events'
+import { Route as ApiV1OpenapiRouteImport } from './routes/api/v1/openapi'
+import { Route as ApiV1VehiclesRouteImport } from './routes/api/v1/vehicles'
+import { Route as ApiV1GpsIngestRouteImport } from './routes/api/v1/gps/ingest'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ActivateRoute = ActivateRouteImport.update({
+  id: '/activate',
+  path: '/activate',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AlertasRoute = AlertasRouteImport.update({
+  id: '/alertas',
+  path: '/alertas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClientesRoute = ClientesRouteImport.update({
+  id: '/clientes',
+  path: '/clientes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CombustibleRoute = CombustibleRouteImport.update({
+  id: '/combustible',
+  path: '/combustible',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConductorRoute = ConductorRouteImport.update({
+  id: '/conductor',
+  path: '/conductor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConductoresRoute = ConductoresRouteImport.update({
+  id: '/conductores',
+  path: '/conductores',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DocumentosRoute = DocumentosRouteImport.update({
+  id: '/documentos',
+  path: '/documentos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnlacesRoute = EnlacesRouteImport.update({
+  id: '/enlaces',
+  path: '/enlaces',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FinanzasRoute = FinanzasRouteImport.update({
+  id: '/finanzas',
+  path: '/finanzas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FlotillasRoute = FlotillasRouteImport.update({
+  id: '/flotillas',
+  path: '/flotillas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GeocercasRoute = GeocercasRouteImport.update({
+  id: '/geocercas',
+  path: '/geocercas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GpsRoute = GpsRouteImport.update({
+  id: '/gps',
+  path: '/gps',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HistorialRoute = HistorialRouteImport.update({
+  id: '/historial',
+  path: '/historial',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IncidenciasRoute = IncidenciasRouteImport.update({
+  id: '/incidencias',
+  path: '/incidencias',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InspeccionesRoute = InspeccionesRouteImport.update({
+  id: '/inspecciones',
+  path: '/inspecciones',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MantenimientoRoute = MantenimientoRouteImport.update({
+  id: '/mantenimiento',
+  path: '/mantenimiento',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MonitorRoute = MonitorRouteImport.update({
+  id: '/monitor',
+  path: '/monitor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotificacionesRoute = NotificacionesRouteImport.update({
+  id: '/notificaciones',
+  path: '/notificaciones',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PortalRoute = PortalRouteImport.update({
+  id: '/portal',
+  path: '/portal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecuperarRoute = RecuperarRouteImport.update({
+  id: '/recuperar',
+  path: '/recuperar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportesRoute = ReportesRouteImport.update({
+  id: '/reportes',
+  path: '/reportes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RespaldosRoute = RespaldosRouteImport.update({
+  id: '/respaldos',
+  path: '/respaldos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RestablecerRoute = RestablecerRouteImport.update({
+  id: '/restablecer',
+  path: '/restablecer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServiciosRoute = ServiciosRouteImport.update({
+  id: '/servicios',
+  path: '/servicios',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UsuariosRoute = UsuariosRouteImport.update({
+  id: '/usuarios',
+  path: '/usuarios',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VehiculosRoute = VehiculosRouteImport.update({
+  id: '/vehiculos',
+  path: '/vehiculos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VerificarCorreoRoute = VerificarCorreoRouteImport.update({
+  id: '/verificar-correo',
+  path: '/verificar-correo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiFilesRoute = ApiFilesRouteImport.update({
+  id: '/api/files',
+  path: '/api/files',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrackingTokenRoute = TrackingTokenRouteImport.update({
+  id: '/tracking/$token',
+  path: '/tracking/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
+  id: '/api/auth/$',
+  path: '/api/auth/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiCronJobsRoute = ApiCronJobsRouteImport.update({
+  id: '/api/cron/jobs',
+  path: '/api/cron/jobs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1EventsRoute = ApiV1EventsRouteImport.update({
+  id: '/api/v1/events',
+  path: '/api/v1/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1OpenapiRoute = ApiV1OpenapiRouteImport.update({
+  id: '/api/v1/openapi',
+  path: '/api/v1/openapi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1VehiclesRoute = ApiV1VehiclesRouteImport.update({
+  id: '/api/v1/vehicles',
+  path: '/api/v1/vehicles',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1GpsIngestRoute = ApiV1GpsIngestRouteImport.update({
+  id: '/api/v1/gps/ingest',
+  path: '/api/v1/gps/ingest',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/activate': typeof ActivateRoute
+  '/alertas': typeof AlertasRoute
+  '/clientes': typeof ClientesRoute
+  '/combustible': typeof CombustibleRoute
+  '/conductor': typeof ConductorRoute
+  '/conductores': typeof ConductoresRoute
+  '/documentos': typeof DocumentosRoute
+  '/enlaces': typeof EnlacesRoute
+  '/finanzas': typeof FinanzasRoute
+  '/flotillas': typeof FlotillasRoute
+  '/geocercas': typeof GeocercasRoute
+  '/gps': typeof GpsRoute
+  '/historial': typeof HistorialRoute
+  '/incidencias': typeof IncidenciasRoute
+  '/inspecciones': typeof InspeccionesRoute
+  '/login': typeof LoginRoute
+  '/mantenimiento': typeof MantenimientoRoute
+  '/monitor': typeof MonitorRoute
+  '/notificaciones': typeof NotificacionesRoute
+  '/portal': typeof PortalRoute
+  '/recuperar': typeof RecuperarRoute
+  '/register': typeof RegisterRoute
+  '/reportes': typeof ReportesRoute
+  '/respaldos': typeof RespaldosRoute
+  '/restablecer': typeof RestablecerRoute
+  '/servicios': typeof ServiciosRoute
+  '/usuarios': typeof UsuariosRoute
+  '/vehiculos': typeof VehiculosRoute
+  '/verificar-correo': typeof VerificarCorreoRoute
+  '/api/files': typeof ApiFilesRoute
+  '/tracking/$token': typeof TrackingTokenRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/cron/jobs': typeof ApiCronJobsRoute
+  '/api/v1/events': typeof ApiV1EventsRoute
+  '/api/v1/openapi': typeof ApiV1OpenapiRoute
+  '/api/v1/vehicles': typeof ApiV1VehiclesRoute
+  '/api/v1/gps/ingest': typeof ApiV1GpsIngestRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/activate': typeof ActivateRoute
+  '/alertas': typeof AlertasRoute
+  '/clientes': typeof ClientesRoute
+  '/combustible': typeof CombustibleRoute
+  '/conductor': typeof ConductorRoute
+  '/conductores': typeof ConductoresRoute
+  '/documentos': typeof DocumentosRoute
+  '/enlaces': typeof EnlacesRoute
+  '/finanzas': typeof FinanzasRoute
+  '/flotillas': typeof FlotillasRoute
+  '/geocercas': typeof GeocercasRoute
+  '/gps': typeof GpsRoute
+  '/historial': typeof HistorialRoute
+  '/incidencias': typeof IncidenciasRoute
+  '/inspecciones': typeof InspeccionesRoute
+  '/login': typeof LoginRoute
+  '/mantenimiento': typeof MantenimientoRoute
+  '/monitor': typeof MonitorRoute
+  '/notificaciones': typeof NotificacionesRoute
+  '/portal': typeof PortalRoute
+  '/recuperar': typeof RecuperarRoute
+  '/register': typeof RegisterRoute
+  '/reportes': typeof ReportesRoute
+  '/respaldos': typeof RespaldosRoute
+  '/restablecer': typeof RestablecerRoute
+  '/servicios': typeof ServiciosRoute
+  '/usuarios': typeof UsuariosRoute
+  '/vehiculos': typeof VehiculosRoute
+  '/verificar-correo': typeof VerificarCorreoRoute
+  '/api/files': typeof ApiFilesRoute
+  '/tracking/$token': typeof TrackingTokenRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/cron/jobs': typeof ApiCronJobsRoute
+  '/api/v1/events': typeof ApiV1EventsRoute
+  '/api/v1/openapi': typeof ApiV1OpenapiRoute
+  '/api/v1/vehicles': typeof ApiV1VehiclesRoute
+  '/api/v1/gps/ingest': typeof ApiV1GpsIngestRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/activate': typeof ActivateRoute
+  '/alertas': typeof AlertasRoute
+  '/clientes': typeof ClientesRoute
+  '/combustible': typeof CombustibleRoute
+  '/conductor': typeof ConductorRoute
+  '/conductores': typeof ConductoresRoute
+  '/documentos': typeof DocumentosRoute
+  '/enlaces': typeof EnlacesRoute
+  '/finanzas': typeof FinanzasRoute
+  '/flotillas': typeof FlotillasRoute
+  '/geocercas': typeof GeocercasRoute
+  '/gps': typeof GpsRoute
+  '/historial': typeof HistorialRoute
+  '/incidencias': typeof IncidenciasRoute
+  '/inspecciones': typeof InspeccionesRoute
+  '/login': typeof LoginRoute
+  '/mantenimiento': typeof MantenimientoRoute
+  '/monitor': typeof MonitorRoute
+  '/notificaciones': typeof NotificacionesRoute
+  '/portal': typeof PortalRoute
+  '/recuperar': typeof RecuperarRoute
+  '/register': typeof RegisterRoute
+  '/reportes': typeof ReportesRoute
+  '/respaldos': typeof RespaldosRoute
+  '/restablecer': typeof RestablecerRoute
+  '/servicios': typeof ServiciosRoute
+  '/usuarios': typeof UsuariosRoute
+  '/vehiculos': typeof VehiculosRoute
+  '/verificar-correo': typeof VerificarCorreoRoute
+  '/api/files': typeof ApiFilesRoute
+  '/tracking/$token': typeof TrackingTokenRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/cron/jobs': typeof ApiCronJobsRoute
+  '/api/v1/events': typeof ApiV1EventsRoute
+  '/api/v1/openapi': typeof ApiV1OpenapiRoute
+  '/api/v1/vehicles': typeof ApiV1VehiclesRoute
+  '/api/v1/gps/ingest': typeof ApiV1GpsIngestRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/activate'
+    | '/alertas'
+    | '/clientes'
+    | '/combustible'
+    | '/conductor'
+    | '/conductores'
+    | '/documentos'
+    | '/enlaces'
+    | '/finanzas'
+    | '/flotillas'
+    | '/geocercas'
+    | '/gps'
+    | '/historial'
+    | '/incidencias'
+    | '/inspecciones'
+    | '/login'
+    | '/mantenimiento'
+    | '/monitor'
+    | '/notificaciones'
+    | '/portal'
+    | '/recuperar'
+    | '/register'
+    | '/reportes'
+    | '/respaldos'
+    | '/restablecer'
+    | '/servicios'
+    | '/usuarios'
+    | '/vehiculos'
+    | '/verificar-correo'
+    | '/api/files'
+    | '/tracking/$token'
+    | '/api/auth/$'
+    | '/api/cron/jobs'
+    | '/api/v1/events'
+    | '/api/v1/openapi'
+    | '/api/v1/vehicles'
+    | '/api/v1/gps/ingest'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/activate'
+    | '/alertas'
+    | '/clientes'
+    | '/combustible'
+    | '/conductor'
+    | '/conductores'
+    | '/documentos'
+    | '/enlaces'
+    | '/finanzas'
+    | '/flotillas'
+    | '/geocercas'
+    | '/gps'
+    | '/historial'
+    | '/incidencias'
+    | '/inspecciones'
+    | '/login'
+    | '/mantenimiento'
+    | '/monitor'
+    | '/notificaciones'
+    | '/portal'
+    | '/recuperar'
+    | '/register'
+    | '/reportes'
+    | '/respaldos'
+    | '/restablecer'
+    | '/servicios'
+    | '/usuarios'
+    | '/vehiculos'
+    | '/verificar-correo'
+    | '/api/files'
+    | '/tracking/$token'
+    | '/api/auth/$'
+    | '/api/cron/jobs'
+    | '/api/v1/events'
+    | '/api/v1/openapi'
+    | '/api/v1/vehicles'
+    | '/api/v1/gps/ingest'
+  id:
+    | '__root__'
+    | '/'
+    | '/activate'
+    | '/alertas'
+    | '/clientes'
+    | '/combustible'
+    | '/conductor'
+    | '/conductores'
+    | '/documentos'
+    | '/enlaces'
+    | '/finanzas'
+    | '/flotillas'
+    | '/geocercas'
+    | '/gps'
+    | '/historial'
+    | '/incidencias'
+    | '/inspecciones'
+    | '/login'
+    | '/mantenimiento'
+    | '/monitor'
+    | '/notificaciones'
+    | '/portal'
+    | '/recuperar'
+    | '/register'
+    | '/reportes'
+    | '/respaldos'
+    | '/restablecer'
+    | '/servicios'
+    | '/usuarios'
+    | '/vehiculos'
+    | '/verificar-correo'
+    | '/api/files'
+    | '/tracking/$token'
+    | '/api/auth/$'
+    | '/api/cron/jobs'
+    | '/api/v1/events'
+    | '/api/v1/openapi'
+    | '/api/v1/vehicles'
+    | '/api/v1/gps/ingest'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ActivateRoute: typeof ActivateRoute
+  AlertasRoute: typeof AlertasRoute
+  ClientesRoute: typeof ClientesRoute
+  CombustibleRoute: typeof CombustibleRoute
+  ConductorRoute: typeof ConductorRoute
+  ConductoresRoute: typeof ConductoresRoute
+  DocumentosRoute: typeof DocumentosRoute
+  EnlacesRoute: typeof EnlacesRoute
+  FinanzasRoute: typeof FinanzasRoute
+  FlotillasRoute: typeof FlotillasRoute
+  GeocercasRoute: typeof GeocercasRoute
+  GpsRoute: typeof GpsRoute
+  HistorialRoute: typeof HistorialRoute
+  IncidenciasRoute: typeof IncidenciasRoute
+  InspeccionesRoute: typeof InspeccionesRoute
+  LoginRoute: typeof LoginRoute
+  MantenimientoRoute: typeof MantenimientoRoute
+  MonitorRoute: typeof MonitorRoute
+  NotificacionesRoute: typeof NotificacionesRoute
+  PortalRoute: typeof PortalRoute
+  RecuperarRoute: typeof RecuperarRoute
+  RegisterRoute: typeof RegisterRoute
+  ReportesRoute: typeof ReportesRoute
+  RespaldosRoute: typeof RespaldosRoute
+  RestablecerRoute: typeof RestablecerRoute
+  ServiciosRoute: typeof ServiciosRoute
+  UsuariosRoute: typeof UsuariosRoute
+  VehiculosRoute: typeof VehiculosRoute
+  VerificarCorreoRoute: typeof VerificarCorreoRoute
+  ApiFilesRoute: typeof ApiFilesRoute
+  TrackingTokenRoute: typeof TrackingTokenRoute
+  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  ApiCronJobsRoute: typeof ApiCronJobsRoute
+  ApiV1EventsRoute: typeof ApiV1EventsRoute
+  ApiV1OpenapiRoute: typeof ApiV1OpenapiRoute
+  ApiV1VehiclesRoute: typeof ApiV1VehiclesRoute
+  ApiV1GpsIngestRoute: typeof ApiV1GpsIngestRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +533,307 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/activate': {
+      id: '/activate'
+      path: '/activate'
+      fullPath: '/activate'
+      preLoaderRoute: typeof ActivateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/alertas': {
+      id: '/alertas'
+      path: '/alertas'
+      fullPath: '/alertas'
+      preLoaderRoute: typeof AlertasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/clientes': {
+      id: '/clientes'
+      path: '/clientes'
+      fullPath: '/clientes'
+      preLoaderRoute: typeof ClientesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/combustible': {
+      id: '/combustible'
+      path: '/combustible'
+      fullPath: '/combustible'
+      preLoaderRoute: typeof CombustibleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/conductor': {
+      id: '/conductor'
+      path: '/conductor'
+      fullPath: '/conductor'
+      preLoaderRoute: typeof ConductorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/conductores': {
+      id: '/conductores'
+      path: '/conductores'
+      fullPath: '/conductores'
+      preLoaderRoute: typeof ConductoresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/documentos': {
+      id: '/documentos'
+      path: '/documentos'
+      fullPath: '/documentos'
+      preLoaderRoute: typeof DocumentosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/enlaces': {
+      id: '/enlaces'
+      path: '/enlaces'
+      fullPath: '/enlaces'
+      preLoaderRoute: typeof EnlacesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/finanzas': {
+      id: '/finanzas'
+      path: '/finanzas'
+      fullPath: '/finanzas'
+      preLoaderRoute: typeof FinanzasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/flotillas': {
+      id: '/flotillas'
+      path: '/flotillas'
+      fullPath: '/flotillas'
+      preLoaderRoute: typeof FlotillasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/geocercas': {
+      id: '/geocercas'
+      path: '/geocercas'
+      fullPath: '/geocercas'
+      preLoaderRoute: typeof GeocercasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gps': {
+      id: '/gps'
+      path: '/gps'
+      fullPath: '/gps'
+      preLoaderRoute: typeof GpsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/historial': {
+      id: '/historial'
+      path: '/historial'
+      fullPath: '/historial'
+      preLoaderRoute: typeof HistorialRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/incidencias': {
+      id: '/incidencias'
+      path: '/incidencias'
+      fullPath: '/incidencias'
+      preLoaderRoute: typeof IncidenciasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inspecciones': {
+      id: '/inspecciones'
+      path: '/inspecciones'
+      fullPath: '/inspecciones'
+      preLoaderRoute: typeof InspeccionesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mantenimiento': {
+      id: '/mantenimiento'
+      path: '/mantenimiento'
+      fullPath: '/mantenimiento'
+      preLoaderRoute: typeof MantenimientoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/monitor': {
+      id: '/monitor'
+      path: '/monitor'
+      fullPath: '/monitor'
+      preLoaderRoute: typeof MonitorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notificaciones': {
+      id: '/notificaciones'
+      path: '/notificaciones'
+      fullPath: '/notificaciones'
+      preLoaderRoute: typeof NotificacionesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/portal': {
+      id: '/portal'
+      path: '/portal'
+      fullPath: '/portal'
+      preLoaderRoute: typeof PortalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recuperar': {
+      id: '/recuperar'
+      path: '/recuperar'
+      fullPath: '/recuperar'
+      preLoaderRoute: typeof RecuperarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reportes': {
+      id: '/reportes'
+      path: '/reportes'
+      fullPath: '/reportes'
+      preLoaderRoute: typeof ReportesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/respaldos': {
+      id: '/respaldos'
+      path: '/respaldos'
+      fullPath: '/respaldos'
+      preLoaderRoute: typeof RespaldosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/restablecer': {
+      id: '/restablecer'
+      path: '/restablecer'
+      fullPath: '/restablecer'
+      preLoaderRoute: typeof RestablecerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/servicios': {
+      id: '/servicios'
+      path: '/servicios'
+      fullPath: '/servicios'
+      preLoaderRoute: typeof ServiciosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/usuarios': {
+      id: '/usuarios'
+      path: '/usuarios'
+      fullPath: '/usuarios'
+      preLoaderRoute: typeof UsuariosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vehiculos': {
+      id: '/vehiculos'
+      path: '/vehiculos'
+      fullPath: '/vehiculos'
+      preLoaderRoute: typeof VehiculosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/verificar-correo': {
+      id: '/verificar-correo'
+      path: '/verificar-correo'
+      fullPath: '/verificar-correo'
+      preLoaderRoute: typeof VerificarCorreoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/files': {
+      id: '/api/files'
+      path: '/api/files'
+      fullPath: '/api/files'
+      preLoaderRoute: typeof ApiFilesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tracking/$token': {
+      id: '/tracking/$token'
+      path: '/tracking/$token'
+      fullPath: '/tracking/$token'
+      preLoaderRoute: typeof TrackingTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/auth/$': {
+      id: '/api/auth/$'
+      path: '/api/auth/$'
+      fullPath: '/api/auth/$'
+      preLoaderRoute: typeof ApiAuthSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/cron/jobs': {
+      id: '/api/cron/jobs'
+      path: '/api/cron/jobs'
+      fullPath: '/api/cron/jobs'
+      preLoaderRoute: typeof ApiCronJobsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/events': {
+      id: '/api/v1/events'
+      path: '/api/v1/events'
+      fullPath: '/api/v1/events'
+      preLoaderRoute: typeof ApiV1EventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/openapi': {
+      id: '/api/v1/openapi'
+      path: '/api/v1/openapi'
+      fullPath: '/api/v1/openapi'
+      preLoaderRoute: typeof ApiV1OpenapiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/vehicles': {
+      id: '/api/v1/vehicles'
+      path: '/api/v1/vehicles'
+      fullPath: '/api/v1/vehicles'
+      preLoaderRoute: typeof ApiV1VehiclesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/gps/ingest': {
+      id: '/api/v1/gps/ingest'
+      path: '/api/v1/gps/ingest'
+      fullPath: '/api/v1/gps/ingest'
+      preLoaderRoute: typeof ApiV1GpsIngestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ActivateRoute: ActivateRoute,
+  AlertasRoute: AlertasRoute,
+  ClientesRoute: ClientesRoute,
+  CombustibleRoute: CombustibleRoute,
+  ConductorRoute: ConductorRoute,
+  ConductoresRoute: ConductoresRoute,
+  DocumentosRoute: DocumentosRoute,
+  EnlacesRoute: EnlacesRoute,
+  FinanzasRoute: FinanzasRoute,
+  FlotillasRoute: FlotillasRoute,
+  GeocercasRoute: GeocercasRoute,
+  GpsRoute: GpsRoute,
+  HistorialRoute: HistorialRoute,
+  IncidenciasRoute: IncidenciasRoute,
+  InspeccionesRoute: InspeccionesRoute,
+  LoginRoute: LoginRoute,
+  MantenimientoRoute: MantenimientoRoute,
+  MonitorRoute: MonitorRoute,
+  NotificacionesRoute: NotificacionesRoute,
+  PortalRoute: PortalRoute,
+  RecuperarRoute: RecuperarRoute,
+  RegisterRoute: RegisterRoute,
+  ReportesRoute: ReportesRoute,
+  RespaldosRoute: RespaldosRoute,
+  RestablecerRoute: RestablecerRoute,
+  ServiciosRoute: ServiciosRoute,
+  UsuariosRoute: UsuariosRoute,
+  VehiculosRoute: VehiculosRoute,
+  VerificarCorreoRoute: VerificarCorreoRoute,
+  ApiFilesRoute: ApiFilesRoute,
+  TrackingTokenRoute: TrackingTokenRoute,
+  ApiAuthSplatRoute: ApiAuthSplatRoute,
+  ApiCronJobsRoute: ApiCronJobsRoute,
+  ApiV1EventsRoute: ApiV1EventsRoute,
+  ApiV1OpenapiRoute: ApiV1OpenapiRoute,
+  ApiV1VehiclesRoute: ApiV1VehiclesRoute,
+  ApiV1GpsIngestRoute: ApiV1GpsIngestRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
