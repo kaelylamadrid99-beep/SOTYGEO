@@ -41,7 +41,6 @@ import { Route as VehiculosRouteImport } from './routes/vehiculos'
 import { Route as VerificarCorreoRouteImport } from './routes/verificar-correo'
 import { Route as ApiFilesRouteImport } from './routes/api/files'
 import { Route as TrackingTokenRouteImport } from './routes/tracking/$token'
-import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as ApiCronJobsRouteImport } from './routes/api/cron/jobs'
 import { Route as ApiV1EventsRouteImport } from './routes/api/v1/events'
 import { Route as ApiV1OpenapiRouteImport } from './routes/api/v1/openapi'
@@ -208,11 +207,6 @@ const TrackingTokenRoute = TrackingTokenRouteImport.update({
   path: '/tracking/$token',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
-  id: '/api/auth/$',
-  path: '/api/auth/$',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiCronJobsRoute = ApiCronJobsRouteImport.update({
   id: '/api/cron/jobs',
   path: '/api/cron/jobs',
@@ -272,7 +266,6 @@ export interface FileRoutesByFullPath {
   '/verificar-correo': typeof VerificarCorreoRoute
   '/api/files': typeof ApiFilesRoute
   '/tracking/$token': typeof TrackingTokenRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/cron/jobs': typeof ApiCronJobsRoute
   '/api/v1/events': typeof ApiV1EventsRoute
   '/api/v1/openapi': typeof ApiV1OpenapiRoute
@@ -312,7 +305,6 @@ export interface FileRoutesByTo {
   '/verificar-correo': typeof VerificarCorreoRoute
   '/api/files': typeof ApiFilesRoute
   '/tracking/$token': typeof TrackingTokenRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/cron/jobs': typeof ApiCronJobsRoute
   '/api/v1/events': typeof ApiV1EventsRoute
   '/api/v1/openapi': typeof ApiV1OpenapiRoute
@@ -353,7 +345,6 @@ export interface FileRoutesById {
   '/verificar-correo': typeof VerificarCorreoRoute
   '/api/files': typeof ApiFilesRoute
   '/tracking/$token': typeof TrackingTokenRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/cron/jobs': typeof ApiCronJobsRoute
   '/api/v1/events': typeof ApiV1EventsRoute
   '/api/v1/openapi': typeof ApiV1OpenapiRoute
@@ -395,7 +386,6 @@ export interface FileRouteTypes {
     | '/verificar-correo'
     | '/api/files'
     | '/tracking/$token'
-    | '/api/auth/$'
     | '/api/cron/jobs'
     | '/api/v1/events'
     | '/api/v1/openapi'
@@ -435,7 +425,6 @@ export interface FileRouteTypes {
     | '/verificar-correo'
     | '/api/files'
     | '/tracking/$token'
-    | '/api/auth/$'
     | '/api/cron/jobs'
     | '/api/v1/events'
     | '/api/v1/openapi'
@@ -475,7 +464,6 @@ export interface FileRouteTypes {
     | '/verificar-correo'
     | '/api/files'
     | '/tracking/$token'
-    | '/api/auth/$'
     | '/api/cron/jobs'
     | '/api/v1/events'
     | '/api/v1/openapi'
@@ -516,7 +504,6 @@ export interface RootRouteChildren {
   VerificarCorreoRoute: typeof VerificarCorreoRoute
   ApiFilesRoute: typeof ApiFilesRoute
   TrackingTokenRoute: typeof TrackingTokenRoute
-  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiCronJobsRoute: typeof ApiCronJobsRoute
   ApiV1EventsRoute: typeof ApiV1EventsRoute
   ApiV1OpenapiRoute: typeof ApiV1OpenapiRoute
@@ -750,13 +737,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TrackingTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/auth/$': {
-      id: '/api/auth/$'
-      path: '/api/auth/$'
-      fullPath: '/api/auth/$'
-      preLoaderRoute: typeof ApiAuthSplatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/cron/jobs': {
       id: '/api/cron/jobs'
       path: '/api/cron/jobs'
@@ -828,7 +808,6 @@ const rootRouteChildren: RootRouteChildren = {
   VerificarCorreoRoute: VerificarCorreoRoute,
   ApiFilesRoute: ApiFilesRoute,
   TrackingTokenRoute: TrackingTokenRoute,
-  ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiCronJobsRoute: ApiCronJobsRoute,
   ApiV1EventsRoute: ApiV1EventsRoute,
   ApiV1OpenapiRoute: ApiV1OpenapiRoute,

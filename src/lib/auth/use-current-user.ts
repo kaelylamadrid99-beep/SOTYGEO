@@ -1,84 +1,63 @@
-import { useMemo } from "react";
-import { authClient, authEnabled } from "./client";
+import { useEffect, useState } from "react";
+import type { User } from "@supabase/supabase-js";
+import { supabase } from "@/integrations/supabase/client";
 
-/** Normalized user shape used across the app, auth on or off. */
 export type AppUser = {
   id: string;
   displayName: string | null;
   primaryEmail: string | null;
   profileImageUrl: string | null;
-  /** True when this is the sandbox/dev fallback (auth not configured). */
   isDevFallback: boolean;
 };
 
-/**
- * Stable fallback user, used ONLY when auth is disabled
- * (`VITE_AUTH_ENABLED=false`, the shipped default). With auth on, the sandbox
- * live preview does real sign-in via the baked preview client. Its id is
- * `"dev-user"` — the SAME id `verify.server.ts` returns server-side — so per-user
- * rows written in that mode belong to one consistent owner.
- */
-export const DEV_USER: AppUser = {
-  id: "dev-user",
-  displayName: "Dev User",
-  primaryEmail: "dev@example.com",
-  profileImageUrl: null,
-  isDevFallback: true,
-};
+export type CurrentUserState = { user: AppUser | null; isPending: boolean };
 
-/** `useCurrentUserState()` result: the user plus the session-loading flag. */
-export type CurrentUserState = {
-  /** The user — `null` BOTH while the session loads and when signed out. */
-  user: AppUser | null;
-  /** True while the session is still resolving — don't treat `user: null` as signed out yet. */
-  isPending: boolean;
-};
+function toAppUser(u: User | null | undefined): AppUser | null {
+  if (!u) return null;
+  const meta = (u.user_metadata ?? {}) as Record<string, unknown>;
+  return {
+    id: u.id,
+    displayName: (meta.full_name as string) || (meta.name as string) || null,
+    primaryEmail: u.email ?? null,
+    profileImageUrl: (meta.avatar_url as string) || null,
+    isDevFallback: false,
+  };
+}
 
-/**
- * Current user + loading state. Same behavior in live preview and when deployed:
- *   - Auth enabled -> the real signed-in user; `user` is `null` while
- *                            the session resolves (`isPending: true`) and when
- *                            signed out (`isPending: false`). Session comes from
- *                            Better Auth `useSession()` → `/api/auth/get-session`
- *                            (cookie when deployed; bearer in live preview).
- *   - Auth disabled (`VITE_AUTH_ENABLED=false`) -> `DEV_USER`, never pending.
- *
- * Protect a route by waiting out `isPending` before acting on `user` —
- * redirecting on `user: null` alone bounces signed-in visitors to sign-in on
- * every hard reload:
- *
- *   import { RedirectToSignIn } from "@/lib/auth/gates";
- *   const { user, isPending } = useCurrentUserState();
- *   if (isPending) return null;              // still resolving — don't redirect yet
- *   if (!user) return <RedirectToSignIn />;  // definitely signed out
- *
- * `authEnabled` is a module-level constant fixed at load, so the guarded hook
- * call keeps a stable hook order across every render of a given component.
- */
+let current: CurrentUserState = { user: null, isPending: true };
+const listeners = new Set<(s: CurrentUserState) => void>();
+let started = false;
+
+function set(s: CurrentUserState) {
+  const same = s.isPending === current.isPending && s.user?.id === current.user?.id && s.user?.displayName === current.user?.displayName;
+  current = same ? current : s;
+  listeners.forEach((l) => l(current));
+}
+
+function start() {
+  if (started || typeof window === "undefined") return;
+  started = true;
+  supabase.auth.onAuthStateChange((_e, session) => {
+    set({ user: toAppUser(session?.user), isPending: false });
+  });
+  void supabase.auth.getSession().then(({ data }) => {
+    set({ user: toAppUser(data.session?.user), isPending: false });
+  });
+}
+
 export function useCurrentUserState(): CurrentUserState {
-  if (!authEnabled) return { user: DEV_USER, isPending: false };
-  // eslint-disable-next-line react-hooks/rules-of-hooks -- authEnabled is constant for the app's lifetime
-  return useSessionUserState();
+  const [state, setState] = useState<CurrentUserState>({ user: null, isPending: true });
+  useEffect(() => {
+    start();
+    setState(current);
+    listeners.add(setState);
+    return () => {
+      listeners.delete(setState);
+    };
+  }, []);
+  return state;
 }
 
-function useSessionUserState(): CurrentUserState {
-  const { data, isPending } = authClient.useSession();
-  const id = data?.user.id;
-  const displayName = data?.user.name ?? null;
-  const primaryEmail = data?.user.email ?? null;
-  const profileImageUrl = data?.user.image ?? null;
-  const user = useMemo<AppUser | null>(
-    () => (id ? { id, displayName, primaryEmail, profileImageUrl, isDevFallback: false } : null),
-    [id, displayName, primaryEmail, profileImageUrl],
-  );
-  return useMemo(() => ({ user, isPending }), [user, isPending]);
-}
-
-/**
- * Convenience view of `useCurrentUserState().user` for display (e.g.
- * `user?.displayName ?? "Guest"`). NOTE: `null` means *loading OR signed out* —
- * for redirects/guards use `useCurrentUserState()` and check `isPending`.
- */
 export function useCurrentUser(): AppUser | null {
   return useCurrentUserState().user;
 }

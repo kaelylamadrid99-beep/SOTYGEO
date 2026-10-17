@@ -1,7 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState, type FormEvent } from "react";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
-import { authClient, setBearerToken } from "@/lib/auth/client";
 import { registerCompany } from "@/lib/sotygeo/users/registration";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -63,35 +62,8 @@ function Register() {
     try {
       const { confirm: _confirm, ...payload } = form;
       const result = await registerCompany({ data: payload });
-      // Intentar iniciar sesión de inmediato para no forzar un segundo paso.
-      // Si falla (p.ej. cookies bloqueadas), dejamos la pantalla de éxito con enlace a /login.
-      try {
-        const { data: signInData, error: signErr } = await authClient.signIn.email({
-          email: form.email,
-          password: form.password,
-          callbackURL: "/",
-        });
-        if (!signErr) {
-          const tokenFromBody =
-            signInData && typeof signInData === "object" && "token" in signInData
-              ? (signInData as { token?: string | null }).token
-              : null;
-          if (tokenFromBody) {
-            setBearerToken(tokenFromBody);
-          }
-          const { data: session } = await authClient
-            .getSession({ query: { disableCookieCache: true } })
-            .catch(() => ({ data: null }));
-          if (session?.user) {
-            await navigate({ to: "/" });
-            return;
-          }
-        }
-      } catch {
-        /* cae al flujo de "cuenta lista" + Entrar ahora */
-      }
       setSentTo(form.email);
-      if (result.previewVerifyPath) setPreviewVerifyPath(result.previewVerifyPath);
+      void result;
     } catch (err) {
       setError(friendlyError(err));
     } finally {
@@ -107,9 +79,7 @@ function Register() {
           <div className="w-full max-w-sm">
             <h2 className="font-display text-3xl font-semibold tracking-wide">Cuenta lista</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              {previewVerifyPath
-                ? `Registramos ${sentTo}. Ya puedes entrar al centro de control.`
-                : `Registramos ${sentTo}. Ya puedes iniciar sesión. Si llega un correo de confirmación, ábrelo cuando puedas.`}
+              {`Te enviamos un correo de confirmación a ${sentTo}. Ábrelo para activar tu cuenta y después inicia sesión.`}
             </p>
             <Button asChild className="mt-4 w-full">
               <Link to="/login">Entrar ahora</Link>
