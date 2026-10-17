@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useLayoutEffect, useState } from "react";
-import { completePasswordReset } from "@/lib/sotygeo/users/passwords";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Field } from "@/components/field";
@@ -13,41 +13,22 @@ export const Route = createFileRoute("/restablecer")({
   component: Restablecer,
 });
 
-function tokenFromLocation(searchToken: string): string {
-  if (typeof window !== "undefined") {
-    try {
-      const fromUrl = new URL(window.location.href).searchParams.get("token");
-      if (fromUrl) return fromUrl;
-    } catch {
-      /* ignore malformed location */
-    }
-  }
-  return searchToken;
-}
-
-function stripTokenFromVisibleUrl() {
-  if (typeof window === "undefined") return;
-  try {
-    const url = new URL(window.location.href);
-    if (!url.searchParams.has("token")) return;
-    url.searchParams.delete("token");
-    window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}${url.hash}`);
-  } catch {
-    /* ignore */
-  }
-}
-
 function Restablecer() {
-  const search = Route.useSearch();
-  const [token] = useState(() => tokenFromLocation(search.token ?? ""));
+  const [token, setToken] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
-  useLayoutEffect(() => {
-    stripTokenFromVisibleUrl();
+  useEffect(() => {
+    const { data } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session && (event === "PASSWORD_RECOVERY" || event === "SIGNED_IN" || event === "INITIAL_SESSION")) setToken("ok");
+    });
+    void supabase.auth.getSession().then(({ data: d }) => {
+      if (d.session) setToken("ok");
+    });
+    return () => data.subscription.unsubscribe();
   }, []);
 
   async function submit() {
@@ -63,7 +44,9 @@ function Restablecer() {
     setBusy(true);
     setError(null);
     try {
-      await completePasswordReset({ data: { token, password } });
+      const { error: upErr } = await supabase.auth.updateUser({ password });
+      if (upErr) throw new Error(upErr.message);
+      await supabase.auth.signOut();
       setDone(true);
     } catch (e) {
       setError(e instanceof Error ? e.message : "No se pudo restablecer la contraseña");

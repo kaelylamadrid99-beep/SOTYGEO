@@ -79,9 +79,7 @@ function Register() {
           <div className="w-full max-w-sm">
             <h2 className="font-display text-3xl font-semibold tracking-wide">Cuenta lista</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              {previewVerifyPath
-                ? `Registramos ${sentTo}. Ya puedes entrar al centro de control.`
-                : `Registramos ${sentTo}. Ya puedes iniciar sesión. Si llega un correo de confirmación, ábrelo cuando puedas.`}
+              {`Te enviamos un correo de confirmación a ${sentTo}. Ábrelo para activar tu cuenta y después inicia sesión.`}
             </p>
             <Button asChild className="mt-4 w-full">
               <Link to="/login">Entrar ahora</Link>

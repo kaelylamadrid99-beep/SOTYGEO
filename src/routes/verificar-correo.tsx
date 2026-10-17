@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState, type FormEvent } from "react";
-import { resendEmailVerification, verifyEmail } from "@/lib/sotygeo/users/email-verification";
+import { resendEmailVerification } from "@/lib/sotygeo/users/email-verification";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Field } from "@/components/field";
@@ -15,34 +15,10 @@ export const Route = createFileRoute("/verificar-correo")({
 
 function VerificarCorreo() {
   const search = Route.useSearch();
-  const [state, setState] = useState<"idle" | "working" | "ok" | "error">(search.token ? "working" : "idle");
+  const [state, setState] = useState<"idle" | "working" | "ok" | "error">("idle");
   const [email, setEmail] = useState("");
   const [resent, setResent] = useState(false);
   const [busy, setBusy] = useState(false);
-
-  useEffect(() => {
-    const token = search.token;
-    if (!token) return;
-    let cancelled = false;
-    verifyEmail({ data: { token } })
-      .then(() => {
-        if (cancelled) return;
-        setState("ok");
-        try {
-          const url = new URL(window.location.href);
-          url.searchParams.delete("token");
-          window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}${url.hash}`);
-        } catch {
-          /* ignore */
-        }
-      })
-      .catch(() => {
-        if (!cancelled) setState("error");
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [search.token]);
 
   async function resend(e: FormEvent) {
     e.preventDefault();
