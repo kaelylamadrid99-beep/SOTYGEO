@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState, type FormEvent } from "react";
-import { GROK_PROVIDERS, authClient, useOAuthEnabled, signIn, setBearerToken } from "@/lib/auth/client";
+import { GROK_PROVIDERS, useOAuthEnabled, signIn } from "@/lib/auth/client";
+import { supabase } from "@/integrations/supabase/client";
 import { recordLogin, recordLoginFailure } from "@/lib/sotygeo/users/login-audit";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
 import { Button } from "@/components/ui/button";
@@ -37,52 +38,21 @@ function Login() {
     setBusy(true);
     setError(null);
     try {
-      const { data: signInData, error: err } = await authClient.signIn.email({
-        email,
-        password,
-        // Avoid Better Auth redirect; we control navigation after session is confirmed.
-        callbackURL: "/",
-      });
+      const { error: err } = await supabase.auth.signInWithPassword({ email, password });
       if (err) {
         void recordLoginFailure({ data: { email } }).catch(() => undefined);
         throw new Error(
-          err.code === "INVALID_ORIGIN" || /origin/i.test(err.message ?? "")
-            ? "Este dominio no está autorizado para iniciar sesión. Contacta al soporte."
+          /confirm/i.test(err.message)
+            ? "Confirma tu correo para activar la cuenta. Revisa tu bandeja o solicita un nuevo enlace en /verificar-correo."
             : "Correo o contraseña incorrectos",
-        );
-      }
-      // Prefer token from the sign-in payload when the Set-Auth-Token header was
-      // already consumed; keeps server functions authenticated without cookies.
-      const tokenFromBody =
-        signInData && typeof signInData === "object" && "token" in signInData
-          ? (signInData as { token?: string | null }).token
-          : null;
-      if (tokenFromBody && typeof window !== "undefined") {
-        setBearerToken(tokenFromBody);
-      }
-      // Confirma sesión legible (cookie y/o bearer). Reintento corto: en preview
-      // el cookie cache a veces tarda un tick en sincronizar.
-      let session: { user?: unknown } | null = null;
-      for (let i = 0; i < 3; i++) {
-        const res = await authClient
-          .getSession({ query: { disableCookieCache: true } })
-          .catch(() => ({ data: null }));
-        session = res.data ?? null;
-        if (session?.user) break;
-        await new Promise((r) => setTimeout(r, 120 * (i + 1)));
-      }
-      if (!session?.user) {
-        throw new Error(
-          "Las credenciales son correctas, pero no se pudo establecer la sesión. Recarga la página, permite cookies de este sitio y vuelve a intentar. Si usas HTTP fuera de localhost, configura HTTPS y BETTER_AUTH_URL.",
         );
       }
       const r = await recordLogin().catch(() => ({ allowed: true, pending: false }));
       if (!r.allowed) {
-        await authClient.signOut().catch(() => undefined);
-        setBearerToken(null);
+        await supabase.auth.signOut().catch(() => undefined);
         throw new Error(
           r.pending
-            ? "Confirma tu correo para activar la cuenta. Revisa tu bandeja o solicita un nuevo enlace en /verificar-correo."
+            ? "Confirma tu correo para activar la cuenta."
             : "Tu cuenta no está activa. Contacta a tu administrador.",
         );
       }
