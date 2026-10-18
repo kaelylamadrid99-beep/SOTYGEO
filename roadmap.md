@@ -8,4 +8,4 @@
 - [x] Verify register → dashboard → create vehicle
 - [ ] Invitation / notification emails need a sender domain (blocked: user's own domain)
 - [ ] Scheduled jobs endpoint (/api/cron/jobs) needs a schedule (jobs currently run while the app is open)
-- [ ] Publish
+- [x] Publish
