@@ -1,6 +1,5 @@
 import { getRequest } from "@tanstack/react-start/server";
 import { env } from "@/lib/env.server";
-import { buildAuthOrigins, isAllowedAuthOrigin, toOrigin } from "@/lib/auth/origins";
 import type { EmailMessage } from "./templates";
 
 /**
@@ -151,47 +150,12 @@ function redact(email: string): string {
  * all resolve correctly without configuration.
  */
 export function resolveAppOrigin(): string {
-  const explicit = env("BETTER_AUTH_URL") ?? env("APP_URL");
-  const production = process.env.NODE_ENV === "production";
-
-  if (explicit) {
-    const origin = toOrigin(explicit);
-    if (!origin) throw new Error("BETTER_AUTH_URL/APP_URL no contiene un origin válido");
-    if (production && !origin.startsWith("https://")) {
-      throw new Error("La URL pública de autenticación debe usar HTTPS en producción");
-    }
-    const allowlist = buildAuthOrigins(process.env, { production });
-    if (!isAllowedAuthOrigin(origin, allowlist)) {
-      throw new Error("La URL pública de autenticación no está en la allowlist de origins");
-    }
-    return origin;
-  }
-
-  // Never derive security-sensitive links from Host headers in production.
-  // A missing explicit URL is an operations/configuration error.
-  if (production) {
-    throw new Error("BETTER_AUTH_URL o APP_URL es obligatorio para enlaces de autenticación en producción");
-  }
-
-  try {
-    const request = getRequest();
-    const headers = request?.headers;
-    const forwardedHost = headers?.get("x-forwarded-host")?.split(",")[0]?.trim();
-    const host = forwardedHost || headers?.get("host") || "localhost:8080";
-    const forwardedProto = headers?.get("x-forwarded-proto")?.split(",")[0]?.trim();
-    const isLocal = host.startsWith("localhost") || host.startsWith("127.0.0.1") || host.startsWith("[::1]");
-    const proto = forwardedProto || (isLocal ? "http" : "https");
-    const candidate = toOrigin(`${proto}://${host}`);
-    if (!candidate) throw new Error("origin dinámico inválido");
-    const allowlist = buildAuthOrigins(process.env, { production: false });
-    if (!isAllowedAuthOrigin(candidate, allowlist)) {
-      throw new Error("origin dinámico no autorizado");
-    }
-    return candidate;
-  } catch (err) {
-    if (err instanceof Error && /origin|obligatorio/i.test(err.message)) throw err;
-    return "http://localhost:8080";
-  }
+  const explicit = env("APP_URL");
+  if (explicit) return explicit.replace(/\/$/, "");
+  const req = getRequest();
+  const origin = req.headers.get("origin");
+  if (origin) return origin;
+  return new URL(req.url).origin;
 }
 
 export { passwordResetEmail, emailVerificationEmail, notificationEmail, invitationEmail, accountActivatedEmail } from "./templates";

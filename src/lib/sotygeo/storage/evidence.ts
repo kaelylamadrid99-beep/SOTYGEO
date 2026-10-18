@@ -102,7 +102,7 @@ export const getEvidenceUrl = createServerFn({ method: "GET" })
     // URL realmente firmada: ligada a clave + usuario y con expiración verificada por /api/files.
     const { signFileToken } = await import("../security/signing.server");
     const t = signFileToken({ key, userId: context.userId });
-    return { url: `/api/files?key=${encodeURIComponent(key)}&t=${t}`, expiresInSeconds: SIGNED_URL_TTL_SECONDS };
+    return { url: `/api/files?key=${encodeURIComponent(key)}&u=${encodeURIComponent(context.userId)}&t=${t}`, expiresInSeconds: SIGNED_URL_TTL_SECONDS };
   });
 
 export const uploadEvidenceBlob = createServerFn({ method: "POST" })

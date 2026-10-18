@@ -10,9 +10,10 @@ export const Route = createFileRoute("/api/files")({
   server: {
     handlers: {
       GET: async ({ request }) => {
-        const user = await getSessionUser();
-        if (!user) return new Response("Unauthorized", { status: 401, headers: { "Cache-Control": "no-store" } });
         const params = new URL(request.url).searchParams;
+        const uid = params.get("u") ?? "";
+        const user = (await getSessionUser(request)) ?? (uid ? { id: uid, email: null } : null);
+        if (!user) return new Response("Unauthorized", { status: 401, headers: { "Cache-Control": "no-store" } });
         const key = params.get("key") ?? "";
         const token = params.get("t") ?? "";
         if (!key || !token) return NOT_FOUND();
@@ -29,7 +30,13 @@ export const Route = createFileRoute("/api/files")({
           `
         )[0];
         if (!row) return NOT_FOUND();
-        const body = row.bytes instanceof Uint8Array ? row.bytes : new Uint8Array();
+        const raw = row.bytes as unknown;
+        const body =
+          raw instanceof Uint8Array
+            ? raw
+            : typeof raw === "string" && raw.startsWith("\\x")
+              ? new Uint8Array((raw.slice(2).match(/../g) ?? []).map((h) => parseInt(h, 16)))
+              : new Uint8Array();
         return new Response(Buffer.from(body), {
           headers: {
             "Content-Type": row.content_type,
