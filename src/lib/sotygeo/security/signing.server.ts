@@ -13,7 +13,7 @@ const g = globalThis as typeof globalThis & { __sotygeoDevSigningSecret__?: stri
 
 /** Secreto de firma: BETTER_AUTH_SECRET. En producción es obligatorio (sin fallback). */
 export function signingSecret(): string {
-  const s = process.env.BETTER_AUTH_SECRET?.trim();
+  const s = (process.env.APP_SIGNING_SECRET ?? process.env.BETTER_AUTH_SECRET)?.trim();
   if (s && s.length >= MIN_SECRET_LENGTH) return s;
   if (process.env.NODE_ENV === "production") {
     throw new Error(`BETTER_AUTH_SECRET (mín. ${MIN_SECRET_LENGTH} caracteres) es obligatorio en producción`);
