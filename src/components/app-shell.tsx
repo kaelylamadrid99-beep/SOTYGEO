@@ -365,13 +365,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <main className="flex-1 overflow-auto p-4 lg:p-6">{children}</main>
       </div>
       <Sheet open={open} onOpenChange={setOpen}>
-        <SheetContent side="left" className="bg-sidebar p-4">
-          <div className="mb-6">
+        <SheetContent side="left" className="flex h-full flex-col bg-sidebar p-4">
+          <div className="mb-4 shrink-0">
             <Logo />
           </div>
-          <NavLinks role={workspace?.profile.role} onClick={() => setOpen(false)} />
+          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pr-1 pb-4">
+            <NavLinks role={workspace?.profile.role} onClick={() => setOpen(false)} />
+          </div>
           {authEnabled && !gateSession ? (
-            <div className="mt-auto border-t border-sidebar-border pt-4">
+            <div className="shrink-0 border-t border-sidebar-border pt-4">
               <Button
                 variant="ghost"
                 className="w-full justify-start text-destructive hover:bg-destructive/10"
