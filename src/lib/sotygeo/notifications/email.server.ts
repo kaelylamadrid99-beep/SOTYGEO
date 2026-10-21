@@ -11,7 +11,8 @@ import type { EmailMessage } from "./templates";
  * Configuration (server env — never expose these to the client, never write
  * them into a committed `.env` file; set them where the app is deployed):
  *
- *   RESEND_API_KEY   API key from https://resend.com — enables real delivery.
+ *   RESEND_API_KEY   Linked Resend connector key — enables gateway delivery.
+ *   LOVABLE_API_KEY  Server-only gateway authorization.
  *   EMAIL_FROM       e.g. "SOTYGEO <no-reply@tu-dominio.com>". Must be a
  *                    domain verified with the provider, or delivery is
  *                    rejected.
@@ -62,7 +63,7 @@ export async function sendEmail(message: EmailMessage): Promise<EmailResult> {
     const problem =
       provider === "console" ? "proveedor de correo no configurado (RESEND_API_KEY o SMTP_HOST)"
       : provider === "resend" && !env("RESEND_API_KEY") ? "RESEND_API_KEY no configurado"
-      : provider === "resend" && !env("EMAIL_FROM") ? "EMAIL_FROM no configurado (dominio verificado requerido)"
+       : provider === "resend" && !env("LOVABLE_API_KEY") ? "autorización de correo no configurada"
       : provider === "smtp" && !env("SMTP_HOST") ? "SMTP_HOST no configurado"
       : null;
     if (problem) {
@@ -85,10 +86,16 @@ export async function sendEmail(message: EmailMessage): Promise<EmailResult> {
 
 async function deliverViaResend(message: EmailMessage): Promise<EmailResult> {
   const apiKey = env("RESEND_API_KEY");
-  if (!apiKey) return deliverToConsole(message, "RESEND_API_KEY no configurado");
-  const res = await fetch("https://api.resend.com/emails", {
+  const gatewayKey = env("LOVABLE_API_KEY");
+  if (!apiKey || !gatewayKey) return { ok: false, error: "Conexión de Resend no configurada." };
+  // The default Resend sender is owner-only for tests; other recipients require EMAIL_FROM on a verified domain.
+  const res = await fetch("https://connector-gateway.lovable.dev/resend/emails", {
     method: "POST",
-    headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${gatewayKey}`,
+      "X-Connection-Api-Key": apiKey,
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({
       from: resolveFrom("resend"),
       to: [message.to],
@@ -99,8 +106,10 @@ async function deliverViaResend(message: EmailMessage): Promise<EmailResult> {
   });
   if (!res.ok) {
     const body = await res.text().catch(() => "");
-    console.error("[email] Resend respondió error", { status: res.status, body: body.slice(0, 300) });
-    return { ok: false, error: `resend ${res.status}` };
+    // Avoid logging a provider response if it unexpectedly echoes credentials.
+    const safeBody = body.split(apiKey).join("[redacted]").split(gatewayKey).join("[redacted]");
+    console.error("[email] Resend respondió error", { status: res.status, body: safeBody });
+    return { ok: false, error: `Resend ${res.status}: ${safeBody}` };
   }
   const out = (await res.json().catch(() => ({}))) as { id?: string };
   return { ok: true, providerMessageId: out.id };
