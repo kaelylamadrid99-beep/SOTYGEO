@@ -30,11 +30,11 @@ type Props = {
 };
 
 const FENCE_COLOR: Record<string, string> = {
-  BASE: "#7a93a8",
-  CLIENTE: "#6f9e86",
-  OPERACION: "#c4a15a",
-  RESTRINGIDA: "#c45c4a",
-  OTRA: "#8b96a5",
+  BASE: "#0284c7",
+  CLIENTE: "#16a34a",
+  OPERACION: "#d97706",
+  RESTRINGIDA: "#dc2626",
+  OTRA: "#64748b",
 };
 
 /**
@@ -66,7 +66,7 @@ function markerNode(label: unknown, selected: boolean, border: string): HTMLElem
   return node("div", { style: "display:flex;flex-direction:column;align-items:center;transform:translate(-50%,-50%)" }, [
     node("div", {
       text: label,
-      style: `min-width:54px;padding:3px 7px;border-radius:4px;background:${selected ? "#e8edf2" : "#11151c"};color:${selected ? "#0b0e13" : "#e8edf2"};border:1px solid ${border};font:600 11px/1.2 'IBM Plex Mono',monospace;text-align:center;box-shadow:0 8px 20px -12px #000;`,
+      style: `min-width:54px;padding:3px 7px;border-radius:4px;background:${selected ? "#0d9488" : "#ffffff"};color:${selected ? "#ffffff" : "#1e293b"};border:1px solid ${border};font:600 11px/1.2 'IBM Plex Mono',monospace;text-align:center;box-shadow:0 4px 12px -6px rgb(15 23 42 / 0.25);`,
     }),
     node("div", { style: `width:2px;height:8px;background:${border}` }),
   ]);
@@ -145,7 +145,7 @@ export function FleetMap({
       const L = (mod as { default?: typeof mod }).default ?? mod;
       layers.clearLayers();
       for (const g of geofences) {
-        const color = FENCE_COLOR[g.type] ?? "#8b96a5";
+        const color = FENCE_COLOR[g.type] ?? "#64748b";
         const ring = parsePolygon(g.polygon);
         if (ring.length >= 3) {
           L.polygon(
@@ -163,14 +163,15 @@ export function FleetMap({
       if (route && route.length > 1) {
         L.polyline(
           route.map((p) => [p.lat, p.lng] as [number, number]),
-          { color: "#b8c5d1", weight: 2.5, opacity: 0.7 },
+          { color: "#64748b", weight: 2.5, opacity: 0.7 },
+
         ).addTo(layers);
       }
       if (playhead) {
         L.circleMarker([playhead.lat, playhead.lng], {
           radius: 7,
-          color: "#e8edf2",
-          fillColor: "#6f9e86",
+          color: "#ffffff",
+          fillColor: "#16a34a",
           fillOpacity: 1,
         }).addTo(layers);
       }
@@ -179,7 +180,7 @@ export function FleetMap({
         const moving = u.motion_state === "MOVING";
         const selected = u.id === selectedId;
         const border =
-          u.motion_state === "OFFLINE" ? "#c45c4a" : moving ? "#6f9e86" : "#c4a15a";
+          u.motion_state === "OFFLINE" ? "#dc2626" : moving ? "#16a34a" : "#d97706";
         const icon = L.divIcon({
           className: "unit-marker",
           html: markerNode(u.economic_number, selected, border),

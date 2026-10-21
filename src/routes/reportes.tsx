@@ -94,11 +94,11 @@ function Page() {
         <CardContent className="h-64 pt-5">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={chart}>
-              <CartesianGrid stroke="#242c38" vertical={false} />
-              <XAxis dataKey="name" stroke="#8b96a5" fontSize={11} />
-              <YAxis stroke="#8b96a5" fontSize={11} />
-              <Tooltip contentStyle={{ background: "#161b24", border: "1px solid #242c38" }} />
-              <Bar dataKey="value" fill="#7a93a8" radius={[4, 4, 0, 0]} />
+              <CartesianGrid stroke="#e2e8f0" vertical={false} />
+              <XAxis dataKey="name" stroke="#64748b" fontSize={11} />
+              <YAxis stroke="#64748b" fontSize={11} />
+              <Tooltip contentStyle={{ background: "#ffffff", border: "1px solid #e2e8f0" }} />
+              <Bar dataKey="value" fill="#0d9488" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </CardContent>
