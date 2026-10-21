@@ -75,7 +75,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: APP_NAME },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "theme-color", content: "#090b0e" },
+      { name: "theme-color", content: "#f4f6f8" },
       {
         name: "description",
         content: "Rastreo GPS y gestión de flotas: mapa en vivo, geocercas, inspecciones y reportes.",
@@ -108,7 +108,7 @@ function RootComponent() {
             <AppShell>
               <Outlet />
             </AppShell>
-            <Toaster theme="dark" position="bottom-right" />
+            <Toaster theme="light" position="bottom-right" />
           </QueryClientProvider>
         </AuthProvider>
         <Scripts />
