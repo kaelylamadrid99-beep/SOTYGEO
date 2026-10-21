@@ -5,32 +5,32 @@
   --font-display: "Barlow Condensed", "IBM Plex Sans", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
-  --color-background: #090b0e;
-  --color-foreground: #e8edf2;
-  --color-card: #11151c;
-  --color-card-foreground: #e8edf2;
-  --color-popover: #161b24;
-  --color-popover-foreground: #e8edf2;
-  --color-primary: #d5dde6;
-  --color-primary-foreground: #0b0e13;
-  --color-secondary: #1a212c;
-  --color-secondary-foreground: #e8edf2;
-  --color-muted: #1a212c;
-  --color-muted-foreground: #8b96a5;
-  --color-accent: #222a38;
-  --color-accent-foreground: #e8edf2;
-  --color-destructive: #c45c4a;
-  --color-destructive-foreground: #f8ece9;
-  --color-border: #242c38;
-  --color-input: #242c38;
-  --color-ring: #b8c5d1;
-  --color-sidebar: #0c1016;
-  --color-sidebar-foreground: #e8edf2;
-  --color-sidebar-border: #1c2430;
-  --color-success: #6f9e86;
-  --color-warning: #c4a15a;
-  --color-info: #7a93a8;
-  --color-map: #0e141c;
+  --color-background: #f4f6f8;
+  --color-foreground: #1e293b;
+  --color-card: #ffffff;
+  --color-card-foreground: #1e293b;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #1e293b;
+  --color-primary: #0d9488;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #eef2f5;
+  --color-secondary-foreground: #1e293b;
+  --color-muted: #eef2f5;
+  --color-muted-foreground: #64748b;
+  --color-accent: #e6f4f2;
+  --color-accent-foreground: #0d9488;
+  --color-destructive: #dc2626;
+  --color-destructive-foreground: #ffffff;
+  --color-border: #e2e8f0;
+  --color-input: #e2e8f0;
+  --color-ring: #0d9488;
+  --color-sidebar: #ffffff;
+  --color-sidebar-foreground: #1e293b;
+  --color-sidebar-border: #e2e8f0;
+  --color-success: #16a34a;
+  --color-warning: #d97706;
+  --color-info: #0284c7;
+  --color-map: #e8eef2;
 
   --radius-sm: 6px;
   --radius-md: 10px;
@@ -38,7 +38,7 @@
   --radius-xl: 22px;
   --radius-2xl: 28px;
 
-  --shadow-panel: 0 1px 0 0 rgb(255 255 255 / 0.03), 0 12px 40px -24px rgb(0 0 0 / 0.55);
+  --shadow-panel: 0 1px 2px 0 rgb(15 23 42 / 0.05), 0 8px 24px -16px rgb(15 23 42 / 0.12);
 }
 
 @layer base {
@@ -86,12 +86,8 @@
   font-family: var(--font-sans);
 }
 
-.leaflet-tile-pane {
-  filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.95) saturate(0.35);
-}
-
 .leaflet-control-attribution {
-  background: rgb(9 11 14 / 0.72) !important;
+  background: rgb(255 255 255 / 0.8) !important;
   color: var(--color-muted-foreground);
   font-size: 10px;
 }
